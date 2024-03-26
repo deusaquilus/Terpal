@@ -10,7 +10,6 @@ import org.jetbrains.kotlin.ir.declarations.*
 import org.jetbrains.kotlin.ir.expressions.*
 import org.jetbrains.kotlin.ir.symbols.*
 import org.jetbrains.kotlin.ir.types.*
-import org.jetbrains.kotlin.ir.types.impl.ReturnTypeIsNotInitializedException
 import org.jetbrains.kotlin.ir.types.impl.originalKotlinType
 import org.jetbrains.kotlin.ir.util.parentAsClass
 import org.jetbrains.kotlin.ir.visitors.IrElementVisitor
@@ -145,7 +144,7 @@ class RenderIrElementVisitorSimple(normalizeNames: Boolean = false, private val 
       }
       when (parent) {
         is IrPackageFragment -> {
-          val fqn = parent.fqName.asString()
+          val fqn = parent.packageFqName.asString()
           append(fqn.ifEmpty { "<root>" })
         }
         is IrDeclaration -> {
@@ -179,10 +178,10 @@ class RenderIrElementVisitorSimple(normalizeNames: Boolean = false, private val 
     "[IrModuleFragment] name:${declaration.name}"
 
   override fun visitExternalPackageFragment(declaration: IrExternalPackageFragment, data: Nothing?): String =
-    "[IrExternalPackageFragment] fqName:${declaration.fqName}"
+    "[IrExternalPackageFragment] fqName:${declaration.packageFqName}"
 
   override fun visitFile(declaration: IrFile, data: Nothing?): String =
-    "[IrFile] fqName:${declaration.fqName} fileName:${declaration.path}"
+    "[IrFile] fqName:${declaration.packageFqName} fileName:${declaration.path}"
 
   override fun visitFunction(declaration: IrFunction, data: Nothing?): String =
     declaration.runTrimEnd {
@@ -525,7 +524,7 @@ private fun IrDeclaration.renderDeclarationParentFqn(sb: StringBuilder) {
     if (parent is IrDeclaration) {
       parent.renderDeclarationFqn(sb)
     } else if (parent is IrPackageFragment) {
-      sb.append(parent.fqName.toString())
+      sb.append(parent.packageFqName.toString())
     }
   } catch (e: UninitializedPropertyAccessException) {
     sb.append("<uninitialized parent>")
@@ -650,11 +649,7 @@ private fun IrFunction.renderTypeParameters(): String =
     typeParameters.joinToString(separator = ", ", prefix = "<", postfix = ">") { it.name.toString() }
 
 private val IrFunction.safeReturnType: IrType?
-  get() = try {
-    returnType
-  } catch (e: ReturnTypeIsNotInitializedException) {
-    null
-  }
+  get() = returnType
 
 private fun IrLocalDelegatedProperty.renderLocalDelegatedPropertyFlags() =
   if (isVar) "var" else "val"
