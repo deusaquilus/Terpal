@@ -61,7 +61,7 @@ java {
 // Disable publishing for decomat examples
 tasks.withType<PublishToMavenRepository>().configureEach {
   onlyIf {
-    publication.artifactId != "decomat-examples"
+    publication.artifactId != "testing"
   }
 }
 
