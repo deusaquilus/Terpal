@@ -21,8 +21,10 @@ repositories {
 
 tasks {
   compileKotlin {
-    kotlinOptions.suppressWarnings = true
-    kotlinOptions.jvmTarget = "11"
+    compilerOptions {
+      suppressWarnings.set(true)
+      jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+    }
   }
 
   compileJava {
@@ -31,7 +33,9 @@ tasks {
   }
 
   compileTestKotlin {
-    kotlinOptions.jvmTarget = "11"
+    compilerOptions {
+      jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+    }
   }
 
   compileTestJava {

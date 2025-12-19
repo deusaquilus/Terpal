@@ -118,7 +118,7 @@ context(bc: BuilderContext) fun createLambdaN(functionBody: IrExpression, params
 
     val typeWith = params.map { it.type } + functionClosure.returnType
     val functionType =
-      bc.pluginCtx.symbols.functionN(params.size)
+      bc.pluginCtx.irBuiltIns.functionN(params.size)
         // Remember this is FunctionN<InputA, InputB, ... Output> so these input/output args need to be both specified here
         .typeWith(typeWith)
 

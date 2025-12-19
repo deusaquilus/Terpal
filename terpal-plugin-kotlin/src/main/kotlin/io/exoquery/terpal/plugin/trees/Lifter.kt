@@ -23,7 +23,7 @@ class Lifter(val builderCtx: BuilderContext) {
 
   fun List<IrExpression>.liftExprTyped(elementType: IrType): IrExpression {
     val variadics = irBuilder.irVararg(elementType, this)
-    val listOfCall = irBuilder.irCall(listOfRef, context.symbols.list.typeWith(elementType)).apply {
+    val listOfCall = irBuilder.irCall(listOfRef, context.irBuiltIns.listClass.typeWith(elementType)).apply {
       typeArguments[0] = elementType
       arguments[0] = variadics
     }

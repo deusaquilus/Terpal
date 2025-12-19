@@ -6,12 +6,15 @@ import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
 import org.jetbrains.kotlin.compiler.plugin.CompilerPluginRegistrar
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
+import org.jetbrains.kotlin.config.CommonConfigurationKeys
 import kotlin.io.path.Path
 
 @AutoService(CompilerPluginRegistrar::class)
 @OptIn(ExperimentalCompilerApi::class)
-class Registrar: CompilerPluginRegistrar() {
+class Registrar : CompilerPluginRegistrar() {
     override val supportsK2: Boolean get() = true
+
+    override val pluginId: String = "io.exoquery.terpal-plugin"
 
     override fun ExtensionStorage.registerExtensions(configuration: CompilerConfiguration) {
         IrGenerationExtension.registerExtension(
@@ -20,7 +23,7 @@ class Registrar: CompilerPluginRegistrar() {
               // erased. I am not sure why kotlin does this.
               Options(configuration),
               configuration,
-              configuration.getNotNull(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY),
+              configuration.getNotNull(CommonConfigurationKeys.MESSAGE_COLLECTOR_KEY),
               Path(configuration.getNotNull(PROJECT_DIR_KEY))
             )
         )

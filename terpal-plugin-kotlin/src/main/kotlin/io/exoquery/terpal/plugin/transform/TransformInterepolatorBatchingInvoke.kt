@@ -114,7 +114,7 @@ class TransformInterepolatorBatchingInvoke(val ctx: BuilderContext) {
 
       val lifter = makeLifter()
       val partsLifted =
-        with (lifter) { parts.liftExprTyped(context.symbols.string.defaultType) }
+        with (lifter) { parts.liftExprTyped(context.irBuiltIns.stringType) }
 
 
       // TODO what if it's an interpolator in an interpolator (i.e. Sql("...${Sql(...)}...") ) so need to call recursive transform

@@ -121,7 +121,7 @@ class TransformInterepolatorInvoke(val ctx: BuilderContext) {
 
       val lifter = makeLifter()
       val partsLifted =
-        with (lifter) { parts.liftExprTyped(context.symbols.string.defaultType) }
+        with (lifter) { parts.liftExprTyped(context.irBuiltIns.stringType) }
 
       val paramsLifted =
         with (lifter) { params.liftExprTyped(interpolateType) }
