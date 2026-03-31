@@ -1,7 +1,7 @@
 plugins {
     id("io.exoquery.terpal-plugin")
     id("conventions-multiplatform")
-    kotlin("multiplatform") version "2.3.0"
+    kotlin("multiplatform") version "2.3.20"
 }
 
 kotlin {
