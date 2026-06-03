@@ -1,11 +1,11 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("jvm") version "2.3.0"
+    kotlin("jvm") version "2.4.0"
     id("maven-publish")
     id("conventions")
     id("publish-jvm")
-    kotlin("kapt") version "2.3.0"
+    kotlin("kapt") version "2.4.0"
 }
 
 kotlin {
@@ -14,7 +14,6 @@ kotlin {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile>().configureEach {
     compilerOptions {
-        freeCompilerArgs.add("-Xcontext-parameters")
         // Otherwise will have: Could not resolve io.exoquery:pprint-kotlin:2.0.1.
         // Incompatible because this component declares a component, compatible with Java 11 and the consumer needed a component, compatible with Java 8
         java {
